@@ -1,0 +1,20 @@
+{
+  "type":"object",
+  "properties": {
+    "shopOrderId": {
+      "type": "string"
+    },
+    "goodsId": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "integer"
+    },
+    "placementDate": {
+      "type": "datetime"
+    },
+    "metadata": {
+      "type": "string"
+    }
+  }
+}
