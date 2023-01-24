@@ -8,6 +8,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Random;
 
 @Service
@@ -26,10 +27,14 @@ public class PlaceOrderKafkaProducer {
         int year = LocalDate.now().getYear();
         int dayOfYear = LocalDate.now().getDayOfYear();
         OrderJson order = new OrderJson();
-        order.setGoodsId(goods);
-        order.setQuantity(quantity);
-        order.setShopOrderId(year + "/" + dayOfYear + "/" + new Random().nextInt(1000000));
-        order.setMetadata(objectMapper.createObjectNode().asText());
+        order.withGoodsId(goods)
+                .withQuantity(quantity)
+                .withPlacementDate(LocalDateTime.now())
+                .withShopOrderId(generateShopId(year, dayOfYear));
         kafkaTemplate.send(orderTopic, order);
+    }
+
+    private String generateShopId(int year, int dayOfYear) {
+        return year + "/" + dayOfYear + "/" + new Random().nextInt(1000000);
     }
 }
