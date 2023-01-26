@@ -1,5 +1,18 @@
-spring.bonnie.kafka.topic.order: bonnieOrderTopic
 spring:
+  bonnie:
+    kafka:
+      topic:
+        order: bonnieOrderTopic
+        message: bonnieMessageTopic
   kafka:
+    consumer:
+      properties:
+        spring:
+          json:
+            value:
+              default:
+                type: com.cgi.bonnie.schema.OrderStatusUpdateJson
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      group-id: bonnieGroup
     producer:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
